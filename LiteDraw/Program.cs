@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace LiteDraw
 {
@@ -16,15 +15,10 @@ namespace LiteDraw
 			LiteDraw w = new LiteDraw();
 
 			w.Color = Color.Red;
-			w.MouseClick += (object? sender, MouseEventArgs e) =>
+			w.MouseClick += (litedraw, args) =>
 			{
-				w.FilledRectangle(e.X, e.Y, 10, 10);
-				w.Show();
-			};
-			w.MouseMove += (object? sender, MouseEventArgs e) =>
-			{
-				w.FilledRectangle(e.X, e.Y, 10, 10);
-				w.Show();
+				litedraw.FilledRectangle(args.X, args.Y, 10, 10);
+				litedraw.Show();
 			};
 		}
 

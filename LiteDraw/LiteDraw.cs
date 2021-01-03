@@ -66,62 +66,83 @@ namespace LiteDraw
 			pen = new Pen(color, (float)pensize);
 		}
 
-		public event MouseEventHandler MouseClick
+		public delegate void EventHandler<T>(LiteDraw litedraw, T args);
+
+		public event EventHandler<MouseEventArgs> MouseClick
 		{
-			add => form.MouseClick += value;
-			remove => form.MouseClick -= value;
+			add => form.MouseClick += Map(value);
+			remove => form.MouseClick -= Map(value);
 		}
-		public event MouseEventHandler MouseMove
+		public event EventHandler<MouseEventArgs> MouseMove
 		{
-			add => form.MouseMove += value;
-			remove => form.MouseMove -= value;
+			add => form.MouseMove += Map(value);
+			remove => form.MouseMove -= Map(value);
 		}
-		public event MouseEventHandler MouseDown
+		public event EventHandler<MouseEventArgs> MouseDown
 		{
-			add => form.MouseDown += value;
-			remove => form.MouseDown -= value;
+			add => form.MouseDown += Map(value);
+			remove => form.MouseDown -= Map(value);
 		}
-		public event MouseEventHandler MouseUp
+		public event EventHandler<MouseEventArgs> MouseUp
 		{
-			add => form.MouseUp += value;
-			remove => form.MouseUp -= value;
+			add => form.MouseUp += Map(value);
+			remove => form.MouseUp -= Map(value);
 		}
-		public event MouseEventHandler MouseWheel
+		public event EventHandler<MouseEventArgs> MouseWheel
 		{
-			add => form.MouseWheel += value;
-			remove => form.MouseWheel -= value;
+			add => form.MouseWheel += Map(value);
+			remove => form.MouseWheel -= Map(value);
 		}
-		public event MouseEventHandler MouseDoubleClick
+		public event EventHandler<MouseEventArgs> MouseDoubleClick
 		{
-			add => form.MouseDoubleClick += value;
-			remove => form.MouseDoubleClick -= value;
+			add => form.MouseDoubleClick += Map(value);
+			remove => form.MouseDoubleClick -= Map(value);
 		}
-		public event EventHandler MouseLeave
+		public event EventHandler<EventArgs> MouseLeave
 		{
-			add => form.MouseLeave += value;
-			remove => form.MouseLeave -= value;
+			add => form.MouseLeave += Map(value);
+			remove => form.MouseLeave -= Map(value);
 		}
 
-		public event KeyEventHandler KeyDown
+		public event EventHandler<KeyEventArgs> KeyDown
 		{
-			add => form.KeyDown += value;
-			remove => form.KeyDown -= value;
+			add => form.KeyDown += Map(value);
+			remove => form.KeyDown -= Map(value);
 		}
-		public event KeyEventHandler KeyUp
+		public event EventHandler<KeyEventArgs> KeyUp
 		{
-			add => form.KeyUp += value;
-			remove => form.KeyUp -= value;
+			add => form.KeyUp += Map(value);
+			remove => form.KeyUp -= Map(value);
 		}
-		public event KeyPressEventHandler KeyPress
+		public event EventHandler<KeyPressEventArgs> KeyPress
 		{
-			add => form.KeyPress += value;
-			remove => form.KeyPress -= value;
+			add => form.KeyPress += Map(value);
+			remove => form.KeyPress -= Map(value);
 		}
 
-		public event EventHandler WindowMove
+		public event EventHandler<EventArgs> WindowMove
 		{
-			add => form.WindowMove += value;
-			remove => form.WindowMove -= value;
+			add => form.WindowMove += Map(value);
+			remove => form.WindowMove -= Map(value);
+		}
+
+		private EventHandler Map(EventHandler<EventArgs> mouseEvent) {
+			return (sender, args) => mouseEvent(this, args);
+		}
+
+		private MouseEventHandler Map(EventHandler<MouseEventArgs> mouseEvent)
+		{
+			return (sender, args) => mouseEvent(this, args);
+		}
+
+		private KeyEventHandler Map(EventHandler<KeyEventArgs> mouseEvent)
+		{
+			return (sender, args) => mouseEvent(this, args);
+		}
+
+		private KeyPressEventHandler Map(EventHandler<KeyPressEventArgs> mouseEvent)
+		{
+			return (sender, args) => mouseEvent(this, args);
 		}
 
 		public void DrawLine((int, int) start, (int, int) end)
